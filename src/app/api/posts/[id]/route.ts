@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { unlink, writeFile, mkdir } from 'fs/promises';
+import { unlink } from 'fs/promises';
 import { join } from 'path';
-import { existsSync } from 'fs';
+import { saveMediaFile } from '@/lib/media';
 
 export async function PUT(
   request: NextRequest,
@@ -50,23 +50,12 @@ export async function PUT(
     }
 
     // 2. Process new files
-    const uploadDir = join(process.cwd(), 'public', 'uploads');
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
-    }
-
+    const subdir = post.type === 'TEXT' ? 'uploads/posts' : 'uploads';
     const newlySavedUrls: string[] = [];
     for (const file of newFiles) {
       if (file.size === 0) continue;
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      const filename = `${uniqueSuffix}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
-      const filePath = join(uploadDir, filename);
-
-      await writeFile(filePath, buffer);
-      newlySavedUrls.push(`/uploads/${filename}`);
+      const savedUrl = await saveMediaFile(file, subdir);
+      newlySavedUrls.push(savedUrl);
     }
 
     // Create new images in DB

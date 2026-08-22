@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { saveMediaFile } from '@/lib/media';
 
 export async function GET() {
   try {
@@ -37,25 +35,12 @@ export async function POST(request: NextRequest) {
     const savedImageUrls: string[] = [];
 
     if (files && files.length > 0) {
-      const uploadDir = type === 'TEXT' 
-        ? join(process.cwd(), 'public', 'uploads', 'posts') 
-        : join(process.cwd(), 'public', 'uploads');
-        
-      if (!existsSync(uploadDir)) {
-        await mkdir(uploadDir, { recursive: true });
-      }
+      const subdir = type === 'TEXT' ? 'uploads/posts' : 'uploads';
 
       for (const file of files) {
         if (file.size === 0) continue;
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const filename = `${uniqueSuffix}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
-        const filePath = join(uploadDir, filename);
-
-        await writeFile(filePath, buffer);
-        savedImageUrls.push(type === 'TEXT' ? `/uploads/posts/${filename}` : `/uploads/${filename}`);
+        const savedUrl = await saveMediaFile(file, subdir);
+        savedImageUrls.push(savedUrl);
       }
     }
 
