@@ -25,7 +25,7 @@ A sleek, modern photography portfolio and moments feed built with **Next.js 16 (
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/minimal-gallery.git
+   git clone https://github.com/kilo0702/minimal-gallery.git
    cd minimal-gallery
    ```
 
