@@ -58,6 +58,7 @@ If you already have a running instance with your own photos and database, you ca
 git pull origin main
 npm install
 npx prisma db push
+npm run optimize-images # Optional: Convert existing legacy JPG/PNG images to WebP
 npm run build
 ```
 

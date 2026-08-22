@@ -5,6 +5,7 @@ import styles from './admin.module.css';
 import DeleteButton from './DeleteButton';
 import MarqueeSettingForm from './MarqueeSettingForm';
 import HeroSettingForm from './HeroSettingForm';
+import OptimizeMediaCard from './OptimizeMediaCard';
 
 const isVideo = (url: string | null | undefined) => {
   if (!url) return false;
@@ -121,6 +122,9 @@ export default async function AdminPage({
 
       {/* Marquee Settings */}
       <MarqueeSettingForm initialText={initialMarqueeText} />
+
+      {/* Media Optimization & WebP Self-check Card */}
+      <OptimizeMediaCard />
 
       {/* Content Management Section */}
       <div className={styles.sectionCard}>
