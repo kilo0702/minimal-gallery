@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Post {
+  id         String   @id @default(uuid())
+  type       String   @default("PHOTO") // "PHOTO" or "TEXT"
+  imageUrl   String?  // Kept for backwards compatibility / primary image
+  caption    String
+  content    String?
+  customDate DateTime
+  isPinned   Boolean  @default(false)
+  tags       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  images     Image[]
+}
+
+model Image {
+  id        String   @id @default(uuid())
+  url       String
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}

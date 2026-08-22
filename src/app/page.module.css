@@ -1,0 +1,764 @@
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: top;
+  z-index: -1;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-top: 20rem;
+  margin-bottom: 5rem;
+}
+
+.filterTabs {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  color: wheat;
+  margin-bottom: 1rem;
+  text-shadow: 0 10px 40px var(--background);
+}
+
+.subtitle {
+  color: gainsboro;
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  font-weight: 300;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0 2px 15px var(--background);
+}
+
+.marqueeContainer {
+  max-width: 35vw;
+  min-width: 30vw;
+  overflow: hidden;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  backdrop-filter: blur(10px);
+  border-radius: 100px;
+  box-shadow: 0 4px 30px var(--card-border);
+  display: flex;
+  white-space: nowrap;
+}
+
+.marqueeContent {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 16s linear infinite;
+  color: var(--foreground);
+  font-weight: 500;
+  letter-spacing: 0.5em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.marqueeContent:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(-100%, 0);
+  }
+}
+
+.filterTab {
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.2em;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(5px);
+  background-color: transparent;
+  color: var(--foreground);
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.filterTab:hover {
+  color: var(--accent);
+  box-shadow: 0 4px 12px rgba(128, 128, 128);
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+}
+
+.filterTab:active {
+  transform: scale(0.95);
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+}
+
+.filterTabActive {
+  background: var(--foreground);
+  color: var(--background);
+  border-color: var(--foreground);
+}
+
+.galleryContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.yearGroup {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.yearDivider {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 2rem 0 2rem 0;
+}
+
+.yearText {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-right: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.1em;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--card-border);
+}
+
+.gallery {
+  column-count: 1;
+  column-gap: 2rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery {
+    column-count: 3;
+  }
+}
+
+.postCard {
+  break-inside: avoid;
+  margin-bottom: 2rem;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  transition: transform 0.25s ease-out, box-shadow 0.5s ease-out, background-color 0.5s ease-out;
+  position: relative;
+  animation: cardAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@keyframes cardAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.postCard:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 40px rgba(128, 128, 128);
+}
+
+.postCard:active {
+  transform: scale(0.95);
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.cardContent {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cardDate {
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardCaption {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--foreground);
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--muted);
+}
+
+/* Modal Lightbox Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-out;
+}
+
+.modalOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modalBackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  backdrop-filter: blur(5px);
+}
+
+.modalContent {
+  position: relative;
+  z-index: 1010;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  overflow: hidden;
+  max-height: 90vh;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+  transform: scale(0.4);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modalScrollableArea {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+  max-height: 90vh;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modalScrollableArea::-webkit-scrollbar {
+  display: none;
+}
+
+.modalOpen .modalContent {
+  transform: scale(1);
+}
+
+.modalImageContainer {
+  flex: 1;
+  background: var(--card-border);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 40vh;
+  min-width: 50vw;
+}
+
+.modalImage {
+  width: 100%;
+  height: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.slideInLeft {
+  animation: slideLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.slideInRight {
+  animation: slideRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes slideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.modalRightColumn {
+  background-color: var(--card-bg);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 30vw;
+}
+
+.modalTextContainer {
+  backdrop-filter: blur(50px);
+  padding: 1.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modalTextContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.modalDate {
+  font-size: 1rem;
+  color: var(--accent);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 4px 10px var(--accent);
+}
+
+.modalCaption {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--foreground);
+  line-height: 1.5;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.modalBody {
+  font-size: 1.2rem;
+  color: var(--muted);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  margin-top: 1rem;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 512px) {
+  .modalImageContainer {
+    flex: none;
+    min-height: auto;
+  }
+
+  .modalImage {
+    height: auto;
+    max-height: none;
+    display: block;
+  }
+
+  .modalTextContainer {
+    padding: 1rem;
+    overflow-y: visible;
+    flex: none;
+  }
+
+  .modalDate {
+    font-size: 0.9rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .modalCaption {
+    font-size: 1.2rem;
+    line-height: 1;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: none;
+  }
+
+  .modalBody {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--card-border);
+  color: var(--foreground);
+  pointer-events: auto;
+  border: none;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1020;
+}
+
+.closeButton:hover {
+  background: var(--card-bg);
+  color: var(--foreground);
+  box-shadow: 0 4px 30px var(--foreground);
+  font-size: 1.25rem;
+  transition: 0.2s ease;
+}
+
+.closeButton:active {
+  transform: scale(0.9);
+  background: var(--background);
+}
+
+@media (min-width: 1000px) {
+  .modalContent {
+    height: 80vh;
+  }
+
+  .modalScrollableArea {
+    flex-direction: row;
+    height: 100%;
+  }
+
+  .modalImageContainer {
+    flex: 2;
+    min-height: auto;
+  }
+
+  .modalImage {
+    max-height: 100%;
+  }
+
+  .modalRightColumn {
+    flex: 1;
+    max-width: 350px;
+    max-height: 100%;
+    border-left: 1px solid var(--card-border);
+  }
+}
+
+/* Multi-image styles */
+
+.cardThumbnailGrid {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--card-border);
+  padding: 0.5rem 0rem 0.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.cardThumbnailIndicator {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.cardThumbnailsScroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: hidden;
+  max-width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.cardThumbnailsScroll:active {
+  cursor: grabbing;
+}
+
+.cardThumbnailsScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.cardThumbnailItem {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+}
+
+.cardThumbnailItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.navButtonLeft,
+.navButtonRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  color: var(--foreground);
+  border: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  z-index: 10;
+}
+
+.navButtonLeft:hover,
+.navButtonRight:hover {
+  background: var(--card-bg);
+  transform: translateY(-50%) scale(1.2);
+}
+
+.navButtonLeft:active,
+.navButtonRight:active {
+  transform: translateY(-50%) scale(0.9);
+  background: var(--background);
+}
+
+.navButtonLeft {
+  left: 1rem;
+}
+
+.navButtonRight {
+  right: 1rem;
+}
+
+.modalImageContainer {
+  position: relative;
+}
+
+.modalImageContainerGrabbable {
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.modalImageContainerGrabbable:active {
+  cursor: grabbing;
+}
+
+.modalThumbnailContainer {
+  border-top: 1px solid var(--card-border);
+  padding: 1rem;
+  background-color: var(--card-bg);
+  position: relative;
+}
+
+.thumbnailNavLeft,
+.thumbnailNavRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  color: var(--foreground);
+  border: none;
+  width: 0px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.25;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.thumbnailNavLeft:hover,
+.thumbnailNavRight:hover {
+  opacity: 0.75;
+  transform: translateY(-50%) scale(1.2);
+}
+
+.thumbnailNavLeft:active,
+.thumbnailNavRight:active {
+  transform: scale(0.95);
+}
+
+.thumbnailNavLeft {
+  left: 0.5rem;
+}
+
+.thumbnailNavRight {
+  right: 0.5rem;
+}
+
+.modalThumbnailScroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.modalThumbnailScroll:active {
+  cursor: grabbing;
+}
+
+
+.modalThumbnailItem {
+  opacity: 0.75;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.modalThumbnailItem img {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modalThumbnailItem:hover {
+  opacity: 1;
+}
+
+.modalThumbnailItem:active {
+  transform: scale(0.9);
+  border: 3px solid var(--foreground);
+}
+
+.modalThumbnailActive {
+  border: 3px solid var(--accent);
+  padding: 0.25rem;
+  opacity: 1;
+}
+
+@media (max-width: 1000px) {
+  .modalRightColumn {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modalThumbnailContainer {
+    order: -1;
+    padding: 0.75rem;
+    border-top: none;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .modalThumbnailItem {
+    width: 60px;
+    height: 60px;
+  }
+
+  .modalThumbnailNavLeft {
+    left: 0;
+  }
+
+  .modalThumbnailNavRight {
+    right: 0;
+  }
+}
