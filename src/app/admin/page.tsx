@@ -6,6 +6,11 @@ import DeleteButton from './DeleteButton';
 import MarqueeSettingForm from './MarqueeSettingForm';
 import HeroSettingForm from './HeroSettingForm';
 
+const isVideo = (url: string | null | undefined) => {
+  if (!url) return false;
+  return /\.(mp4|webm|mov|ogg|m4v|mkv|avi)(\?.*)?$/i.test(url);
+};
+
 export const revalidate = 0;
 
 export default async function AdminPage({
@@ -177,14 +182,25 @@ export default async function AdminPage({
                     <tr key={post.id} className={styles.tr}>
                       <td className={styles.td}>
                         {post.imageUrl ? (
-                          <Image
-                            src={post.imageUrl}
-                            alt="preview"
-                            width={68}
-                            height={68}
-                            className={styles.postThumbnail}
-                            unoptimized
-                          />
+                          isVideo(post.imageUrl) ? (
+                            <video
+                              src={post.imageUrl}
+                              muted
+                              playsInline
+                              preload="metadata"
+                              className={styles.postThumbnail}
+                              style={{ objectFit: 'cover' }}
+                            />
+                          ) : (
+                            <Image
+                              src={post.imageUrl}
+                              alt="preview"
+                              width={68}
+                              height={68}
+                              className={styles.postThumbnail}
+                              unoptimized
+                            />
+                          )
                         ) : (
                           <div className={styles.postThumbnailPlaceholder}>
                             <i className="fa-solid fa-book-open"></i>
@@ -260,14 +276,25 @@ export default async function AdminPage({
                 <div key={post.id} className={styles.mobilePostCard}>
                   <div className={styles.mobilePostHeader}>
                     {post.imageUrl ? (
-                      <Image
-                        src={post.imageUrl}
-                        alt="preview"
-                        width={68}
-                        height={68}
-                        className={styles.postThumbnail}
-                        unoptimized
-                      />
+                      isVideo(post.imageUrl) ? (
+                        <video
+                          src={post.imageUrl}
+                          muted
+                          playsInline
+                          preload="metadata"
+                          className={styles.postThumbnail}
+                          style={{ objectFit: 'cover' }}
+                        />
+                      ) : (
+                        <Image
+                          src={post.imageUrl}
+                          alt="preview"
+                          width={68}
+                          height={68}
+                          className={styles.postThumbnail}
+                          unoptimized
+                        />
+                      )
                     ) : (
                       <div className={styles.postThumbnailPlaceholder}>
                         <i className="fa-solid fa-book-open"></i>

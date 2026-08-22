@@ -4,9 +4,9 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import styles from '../page.module.css';
 
-const isVideo = (url: string | null) => {
+const isVideo = (url: string | null | undefined) => {
   if (!url) return false;
-  return /\.(mp4|webm|mov|ogg)$/i.test(url);
+  return /\.(mp4|webm|mov|ogg|m4v|mkv|avi)(\?.*)?$/i.test(url);
 };
 
 type Post = {
@@ -295,23 +295,33 @@ export default function GalleryFeed({ posts, marqueeText }: { posts: Post[], mar
                     style={{ cursor: 'pointer', animationDelay: `${index * 0.08}s` }}
                   >
                     <div className={styles.imageWrapper}>
-                      {isVideo(post.imageUrl) ? (
-                        <video
-                          src={post.imageUrl!}
-                          autoPlay loop muted playsInline
-                          className={styles.image}
-                          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                        />
-                      ) : (
-                        <Image
-                          src={post.imageUrl || '/hero_background.png'}
-                          alt={post.caption || 'Photo'}
-                          width={600}
-                          height={600}
-                          className={styles.image}
-                          unoptimized
-                        />
-                      )}
+                      {(() => {
+                        const primaryMedia = (post.images && post.images.length > 0) ? post.images[0].url : post.imageUrl;
+                        if (isVideo(primaryMedia)) {
+                          return (
+                            <video
+                              src={primaryMedia!}
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              preload="metadata"
+                              className={styles.image}
+                              style={{ objectFit: 'cover', width: '100%', height: '100%', display: 'block' }}
+                            />
+                          );
+                        }
+                        return (
+                          <Image
+                            src={primaryMedia || '/hero_background.png'}
+                            alt={post.caption || 'Photo'}
+                            width={600}
+                            height={600}
+                            className={styles.image}
+                            unoptimized
+                          />
+                        );
+                      })()}
                     </div>
 
                     {hasMultipleImages && (
@@ -427,19 +437,21 @@ export default function GalleryFeed({ posts, marqueeText }: { posts: Post[], mar
                 if (isVideo(mediaUrl)) {
                   return (
                     <video
-                      key={currentImageIndex}
+                      key={`${currentImageIndex}-${mediaUrl}`}
                       src={mediaUrl}
                       controls
                       autoPlay
                       playsInline
+                      preload="auto"
                       className={`${styles.modalImage} ${animationClass}`}
+                      style={{ maxHeight: '70vh', width: '100%', objectFit: 'contain' }}
                     />
                   );
                 }
 
                 return (
                   <img
-                    key={currentImageIndex}
+                    key={`${currentImageIndex}-${mediaUrl}`}
                     src={mediaUrl}
                     alt={displayPost.caption || 'Photo'}
                     className={`${styles.modalImage} ${animationClass}`}

@@ -151,32 +151,47 @@ export default function EditForm({ post }: { post: SerializedPost }) {
 
             {(existingImages.length > 0 || newPreviewUrls.length > 0) && (
               <div className={styles.imageGrid} style={{ marginBottom: '1rem' }}>
-                {existingImages.map((url, index) => (
-                  <div key={url} className={styles.previewImageWrapper}>
-                    <img src={url} alt={`Existing ${index}`} className={styles.previewImageSmall} />
-                    <button
-                      type="button"
-                      className={styles.removeImageBtn}
-                      onClick={() => removeExistingImage(index)}
-                      title="刪除既有相片"
-                    >
-                      <i className="fa-solid fa-xmark"></i>
-                    </button>
-                  </div>
-                ))}
-                {newPreviewUrls.map((url, index) => (
-                  <div key={url} className={styles.previewImageWrapper}>
-                    <img src={url} alt={`New Preview ${index}`} className={styles.previewImageSmall} />
-                    <button
-                      type="button"
-                      className={styles.removeImageBtn}
-                      onClick={() => removeNewImage(index)}
-                      title="取消新增相片"
-                    >
-                      <i className="fa-solid fa-xmark"></i>
-                    </button>
-                  </div>
-                ))}
+                {existingImages.map((url, index) => {
+                  const isVid = /\.(mp4|webm|mov|ogg|m4v|mkv|avi)(\?.*)?$/i.test(url);
+                  return (
+                    <div key={url} className={styles.previewImageWrapper}>
+                      {isVid ? (
+                        <video src={url} muted playsInline className={styles.previewImageSmall} style={{ objectFit: 'cover' }} />
+                      ) : (
+                        <img src={url} alt={`Existing ${index}`} className={styles.previewImageSmall} />
+                      )}
+                      <button
+                        type="button"
+                        className={styles.removeImageBtn}
+                        onClick={() => removeExistingImage(index)}
+                        title="刪除既有檔案"
+                      >
+                        <i className="fa-solid fa-xmark"></i>
+                      </button>
+                    </div>
+                  );
+                })}
+                {newPreviewUrls.map((url, index) => {
+                  const file = newFiles[index];
+                  const isVid = (file && file.type.startsWith('video/')) || /\.(mp4|webm|mov|ogg|m4v|mkv|avi)(\?.*)?$/i.test(url);
+                  return (
+                    <div key={url} className={styles.previewImageWrapper}>
+                      {isVid ? (
+                        <video src={url} muted playsInline className={styles.previewImageSmall} style={{ objectFit: 'cover' }} />
+                      ) : (
+                        <img src={url} alt={`New Preview ${index}`} className={styles.previewImageSmall} />
+                      )}
+                      <button
+                        type="button"
+                        className={styles.removeImageBtn}
+                        onClick={() => removeNewImage(index)}
+                        title="取消新增檔案"
+                      >
+                        <i className="fa-solid fa-xmark"></i>
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             )}
 

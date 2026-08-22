@@ -125,19 +125,27 @@ export default function NewPostPage() {
 
             {previewUrls.length > 0 && (
               <div className={styles.imageGrid}>
-                {previewUrls.map((url, index) => (
-                  <div key={url} className={styles.previewImageWrapper}>
-                    <img src={url} alt={`Preview ${index}`} className={styles.previewImageSmall} />
-                    <button
-                      type="button"
-                      className={styles.removeImageBtn}
-                      onClick={() => removeImage(index)}
-                      title="移除相片"
-                    >
-                      <i className="fa-solid fa-xmark"></i>
-                    </button>
-                  </div>
-                ))}
+                {previewUrls.map((url, index) => {
+                  const file = files[index];
+                  const isVid = (file && file.type.startsWith('video/')) || /\.(mp4|webm|mov|ogg|m4v|mkv|avi)(\?.*)?$/i.test(url);
+                  return (
+                    <div key={url} className={styles.previewImageWrapper}>
+                      {isVid ? (
+                        <video src={url} muted playsInline className={styles.previewImageSmall} style={{ objectFit: 'cover' }} />
+                      ) : (
+                        <img src={url} alt={`Preview ${index}`} className={styles.previewImageSmall} />
+                      )}
+                      <button
+                        type="button"
+                        className={styles.removeImageBtn}
+                        onClick={() => removeImage(index)}
+                        title="移除檔案"
+                      >
+                        <i className="fa-solid fa-xmark"></i>
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>
